@@ -86,7 +86,7 @@ Images are saved to: `media/generated/` with unique filenames (e.g., `generated_
 | Error | Solution |
 |-------|----------|
 | PostgreSQL connection error | Verify PostgreSQL is running, check credentials in `.env`, ensure database `image_generator` exists |
-| Missing POLLINATION API KEY AI API key | Add `POLLINATION_API_KEY` to `.env` file |
+| Missing POLLINATION API key | Add `POLLINATION_API_KEY` to `.env` file |
 | Migration error | Run `python manage.py makemigrations` then `python manage.py migrate` |
 | Port already in use | Use `python manage.py runserver 8001` or kill process on port 8000 |
 | Pillow install failed | Install system dependencies (zlib) or use `pip install --pre Pillow` |
