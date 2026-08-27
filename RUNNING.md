@@ -28,12 +28,12 @@ pip install -r requirements.txt
 Add to `.env` file:
 
 ```env
-STABILITY_API_KEY=your_stability_ai_api_key
-POSTGRES_DB=image_generator
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=markand1234
-POSTGRES_HOST=127.0.0.1
-POSTGRES_PORT=5432
+POLLINATION_API_KEY=Your_POLLINATION_API_KEY
+POSTGRES_DB=" "
+POSTGRES_USER=" "
+POSTGRES_PASSWORD=" "
+POSTGRES_HOST=" "
+POSTGRES_PORT=" "
 ```
 
 ## 5. Run migrations
@@ -86,8 +86,8 @@ Images are saved to: `media/generated/` with unique filenames (e.g., `generated_
 | Error | Solution |
 |-------|----------|
 | PostgreSQL connection error | Verify PostgreSQL is running, check credentials in `.env`, ensure database `image_generator` exists |
-| Missing Stability AI API key | Add `STABILITY_API_KEY` to `.env` file |
-| Stability AI quota/credits exceeded | Check your Stability AI account credits at https://platform.stability.ai/ |
+| Missing Stability AI API key | Add `POLLINATION_API_KEY` to `.env` file |
+| Stability AI quota/credits exceeded | Check your Stability AI account credits at https://platform.pollination.ai/ |
 | Migration error | Run `python manage.py makemigrations` then `python manage.py migrate` |
 | Port already in use | Use `python manage.py runserver 8001` or kill process on port 8000 |
 | Pillow install failed | Install system dependencies (zlib) or use `pip install --pre Pillow` |

@@ -56,11 +56,11 @@ WSGI_APPLICATION = 'image_generator_project.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("POSTGRES_DB", "image_generator"),
-        "USER": os.environ.get("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "markand1234"),
-        "HOST": os.environ.get("POSTGRES_HOST", "127.0.0.1"),
-        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
 
@@ -92,8 +92,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-STABILITY_API_KEY = os.environ.get('STABILITY_API_KEY')
 POLLINATION_API_KEY = os.environ.get('POLLINATION_API_KEY')
 
-if not STABILITY_API_KEY and not DEBUG:
-    raise ValueError("STABILITY_API_KEY environment variable is required in production")
+if not POLLINATION_API_KEY and not DEBUG:
+    raise ValueError("POLLINATION_API_KEY environment variable is required in production")
