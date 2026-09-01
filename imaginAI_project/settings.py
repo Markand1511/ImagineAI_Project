@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'generator',
+    'imaginAI_app',
 ]
 
 MIDDLEWARE = [
@@ -33,12 +33,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'image_generator_project.urls'
+ROOT_URLCONF = 'imaginAI_project.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'staticfiles'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,7 +51,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'image_generator_project.wsgi.application'
+WSGI_APPLICATION = 'imaginAI_project.wsgi.application'
 
 DATABASES = {
     "default": {
@@ -77,6 +77,10 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles',
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles_collected'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -94,5 +98,8 @@ REST_FRAMEWORK = {
 
 POLLINATION_API_KEY = os.environ.get('POLLINATION_API_KEY')
 
-if not POLLINATION_API_KEY and not DEBUG:
-    raise ValueError("POLLINATION_API_KEY environment variable is required in production")
+if not POLLINATION_API_KEY:
+    raise ValueError("POLLINATION_API_KEY is not set in the environment variables.")
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True

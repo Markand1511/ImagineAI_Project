@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import JSONParser
+from rest_framework import generics
 from django.core.files.base import ContentFile
 from PIL import Image
 
@@ -15,6 +16,7 @@ from .services.pollination_service import (
     PollinationGenerationError,
     PollinationNoImageError,
 )
+from .pagination import CustomImagePagination
 
 logger = logging.getLogger(__name__)
 
@@ -86,9 +88,7 @@ class GenerateImageView(APIView):
         }, status=status.HTTP_201_CREATED)
 
     def _save_image(self, image_bytes: bytes, mime_type: str, prompt: str) -> ContentFile:
-        """
-        Save image bytes to a Django ContentFile with proper format detection.
-        """
+        # Save image bytes to a Django ContentFile with proper format detection.
         try:
             image = Image.open(io.BytesIO(image_bytes))
             image.verify()
@@ -115,3 +115,37 @@ class GenerateImageView(APIView):
         filename = f'generated_{GeneratedImage._meta.model.__name__.lower()}_{hash(prompt) % 1000000}.{ext}'
         
         return ContentFile(output.read(), name=filename)
+
+
+class GeneratedImageListView(generics.ListAPIView):
+    queryset = GeneratedImage.objects.all().order_by('-created_at')
+    serializer_class = GeneratedImageSerializer
+    pagination_class = CustomImagePagination
+
+
+class GeneratedImageDetailView(generics.RetrieveDestroyAPIView):
+    queryset = GeneratedImage.objects.all()
+    serializer_class = GeneratedImageSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, context={'request': request})
+        return Response({
+            'status': True,
+            'message': 'Image retrieved successfully',
+            'data': serializer.data
+        })
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        # Delete the physical file if it exists
+        if instance.image:
+            try:
+                instance.image.delete(save=False)
+            except Exception:
+                pass  # Ignore file deletion errors
+        self.perform_destroy(instance)
+        return Response({
+            'status': True,
+            'message': 'Image deleted successfully'
+        }, status=status.HTTP_200_OK)

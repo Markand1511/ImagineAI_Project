@@ -35,12 +35,7 @@ class PollinationService:
             raise PollinationConfigurationError("POLLINATION_API_KEY is not configured in settings.")
 
     def generate_image(self, prompt: str) -> Tuple[bytes, str]:
-        """
-        Generate an image from a text prompt using Pollination AI.
-
-        Returns:
-            Tuple of (image_bytes, mime_type)
-        """
+        # Generate an image from a text prompt using Pollination AI. Returns: Tuple of (image_bytes, mime_type)
         url = f"{self.BASE_URL}{self.ENDPOINT}{prompt}"
 
         headers = {
