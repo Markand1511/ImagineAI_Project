@@ -29,6 +29,7 @@ Thumbs.db
 
 # Virtual environment
 venv/
+.venv/
 env/
 .env
 
@@ -53,9 +54,6 @@ pnpm-debug.log*
 # Frontend build
 frontend/dist/
 frontend/.env
-
-# Python virtual environment (duplicate but explicit)
-.venv/
 
 # OS generated files
 *.pyc
